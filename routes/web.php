@@ -15,8 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+$router->get('/showM/{id}', 'TestController@showMerch');
 $router->get('/show', 'TestController@showCatg');
+$router->post('/show', 'TestController@doing');
+
+$router->post('/store', 'TestController@storeCatg');
+
+$router->post('/storeM', 'TestController@storeMerch');
+
+$router->post('/storeI', 'TestController@storeImage');
+
+$router->post('/storeIM', 'TestController@storeImageM');
+$router->get('/search/{name}/{id}', 'TestController@search');
+
 
 
 Auth::routes();
