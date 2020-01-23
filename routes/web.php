@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 $router->get('/showM/{id}', 'TestController@showMerch');
 $router->get('/show', 'TestController@showCatg');
-$router->post('/show', 'TestController@doing');
+$router->post('/show', 'TestController@login');
 
 $router->post('/store', 'TestController@storeCatg');
 

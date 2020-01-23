@@ -21,14 +21,12 @@ class TestController extends Controller
 {
 
 
-  private $guard;
-
+    private $guard;
     public function __construct()
     {
-
         $this->guard = \Auth::guard('api');
     }
-
+//=========================================================================================================
     public function showCatg(){
      // for($i=8 ; $i<15 ; $i++){
         $roles = Category::all();
@@ -49,36 +47,32 @@ class TestController extends Controller
     }
     return response()->json($data);
     }
+//=========================================================================================================
     public function showMerch(Request $request,$id){
       
       $merch_catg = Merchant::where('category_id',$id)->get();
      return response()->json($merch_catg);
        
      }
-
+//=========================================================================================================
      public function search(Request $request,$name,$id){
       
       $merch_catg = Merchant::where('name', 'LIKE', '%' . $name . '%')->where('category_id',$id)->get();
       
       return response()->json($merch_catg);
      }
-
+//=========================================================================================================
      public function storeMerch()
      {
-         //if (request()->has('image')) {
           $category_id = Category::select('id')->where('name',request()->category)->first();
              Merchant::create([
                'name' => request()->name,
                'phone'=> request()->phone,
                'category_id'=> $category_id->id,
-
-              //   'image' => request()->image->store('uploads', 'public'),
             ]);
-        // }
-         
          return 'hello';
      }
-
+//=========================================================================================================
      public function storeImage(){
         if (request()->has('image')) {
           $category_id = Category::select('id')->where('name',request()->category)->first();
@@ -90,7 +84,7 @@ class TestController extends Controller
 
         return ' thanks ';
      }
-
+//=========================================================================================================
      public function storeImageM(){
       if (request()->has('image')) {
         $merchant_id = Merchant::select('id')->where('name',request()->name)->first();
@@ -98,29 +92,23 @@ class TestController extends Controller
               'image' => request()->image->store('uploads', 'public'),
           ]);
        }
-       
-
       return ' thanks ';
    }
-
+//=========================================================================================================
      public function storeCatg()
      {
-         
          $table = Category::create([
           'name' => request()->name,
          ]);
-         
          return 'all set up';
-     }
-
+      }
+//=========================================================================================================
      public function index()
     {
     return csrf_token(); 
     }
-
-    
-    
-    public function doing(Request $request)
+//=========================================================================================================
+    public function login(Request $request)
     {	
         
       if(is_numeric($request->get('email'))){
@@ -128,22 +116,12 @@ class TestController extends Controller
       }else{
         $credentials = request(['email', 'password']);
       }
-
-        
         if(empty(request('email')) || empty(request('password'))  ){
             return response()->json(['success'=>false,'message' => 'both email and password required'], 401);
         }
         if (! $token = JWTAuth::attempt($credentials)) {
           return response()->json(['status'=>false,'message' => 'Invalid credentials'], 401);
       }
-        // if ( ! $token = $this->guard->attempt($request->only(['email', 'password']))) {
-        //  return response()->json(['success'=>false,'message' => 'Invalid credentials'], 401);  
-         //   }
-      //  if ( ! $token = $this->guard->attempt($request->only(['email', 'password']))) {
-       //   return $this->setStatusCode(Response::HTTP_UNAUTHORIZED)->respond(['message' => 'Invalid email or password.']);
-    //  }
-
-
     return response()->json(['success'=>true ,'api_token'=> $token]);
   }
       //  $user=JWTAuth::user();
